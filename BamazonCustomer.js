@@ -1,5 +1,8 @@
 var mysql = require('mysql');
 var inquirer = require('inquirer');
+var Table = require('easy-table');
+var colors = require('colors');
+// var data =  'SELECT * FROM Products';
 var connection = mysql.createConnection({
     host: "127.0.0.1",
     port: 3306,
@@ -13,19 +16,27 @@ connection.connect(function(err) {
 });
 // Function Start
 function start() {
-    // Display all the products 
+    // Display all the products
+    var t = new Table;
+   
     connection.query('SELECT * FROM Products', function(err, result) {
         if (err) throw err;
-        console.log('<----------Welcome To the Bamazon! What would you like to buy?---------->');
-        // Make it look good 
-        for (var i = 0; i < result.length; i++) {
-            console.log("ID: " + result[i].ItemID + " | " + "Product: " + result[i].ProductName + " | " + "Department: " + result[i].DepartmentName + " | " + "Price: " + "$" + result[i].Price + " | " + "Quantity: " + result[i].StockQuantity);
-        }
-        // ask for a product they want to buy
+        console.log('\n<----------Welcome To the Bamazon! What would you like to buy?---------->\n' .magenta.bold);
+
+        result.forEach(function(itemTable) {
+            t.cell('Product Id'.white , itemTable.ItemID)
+            t.cell('Product'.white , itemTable.ProductName)
+            t.cell('Department'.white , itemTable.DepartmentName)
+            t.cell('Price'.white, itemTable.Price)
+            t.cell('Quantity'.white, itemTable.StockQuantity)
+            t.newRow()
+        });
+        console.log(t.toString());
+
         inquirer.prompt([{
             name: "getId",
             type: "input",
-            message: "What is the ID of the product you would like to buy?",
+            message: "What is the ID of the product you would like to buy?".cyan,
             // validate the value if it is empty don't move to the next prompt
             validate: function(value) {
                 if (isNaN(value) == false && parseInt(value) <= result.length && parseInt(value) > 0) {
@@ -37,16 +48,18 @@ function start() {
         }, {
             name: "qty",
             type: "input",
-            message: "How many units of the product you would like to buy?",
+            message: "How many units of the product you would like to buy?".red,
             validate: function(value) {
-                if (isNaN(value) == false) {
+                if (isNaN(value) == false && parseInt(value) > 0) {
                     return true;
                 } else {
+                  // console.log("Please type sufficiant amout of the item you would like to buy");
                     return false;
+
                 }
             }
         }]).then(function(pick) {
-// store total value as a variable
+            // store total value as a variable
             var grandTotal = ((result[(pick.getId) - 1].Price) * parseInt(pick.qty)).toFixed(2);
 
             if (result[(pick.getId) - 1].StockQuantity >= parseInt(pick.qty)) {
@@ -56,15 +69,17 @@ function start() {
                     { ItemID: pick.getId }
                 ], function(err, result) {
                     if (err) throw err;
-                    console.log("Success! Your total is $" + grandTotal + ". Your item(s) will be shipped to you in 3-5 business days.");
+                    console.log("\nPurchase Successful! Your total is $" + grandTotal + ".");
+                    askAgain();
                 });
             } else {
-                console.log("Sorry! Insufficient quantity!");
+                console.log("Sorry! Insufficient quantity!".red);
+                askAgain();
             }
-            // askAgain();
         });
     });
 }
+
 
 function askAgain() {
     inquirer.prompt([{
@@ -75,7 +90,7 @@ function askAgain() {
         if (pick.more) {
             start();
         } else {
-            console.log("Thank you for Shopping with us. See you soon!");
+            console.log("\nThank you for Shopping with us. See you soon!".red);
         }
     });
 }
