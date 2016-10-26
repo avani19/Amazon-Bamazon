@@ -15,7 +15,7 @@ Created during Week 12 of Rutgers Coding Bootcamp. In this activity, created an 
     * DepartmentName
     * Price (cost to customer)
     * StockQuantity (how much of the product is available in stores)
-  * prompt users with message "which product they would like to purchase by ID number". [See image] (https://github.com/avani19/Amazon-Bamazon/blob/master/Screenshots/Screen%20Shot-2.png).
+  * Prompt users with message "which product they would like to purchase by ID number". [See image] (https://github.com/avani19/Amazon-Bamazon/blob/master/Screenshots/Screen%20Shot-2.png).
   * After that again prompt users with anothore message "how many units of the product they would like to buy".
     * Once the customer has placed the order, If there is a sufficient amount of the product in stock to meet the customer's request.
       * If it is  it will return the total amount of price for that purchase. [See Image] (https://github.com/avani19/Amazon-Bamazon/blob/master/Screenshots/Screen%20Shot-3.png)
