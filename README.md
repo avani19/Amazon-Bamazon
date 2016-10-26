@@ -23,7 +23,7 @@ Created during Week 12 of Rutgers Coding Bootcamp. In this activity, created an 
  * If the purchase goes through, it prompt users with message "Would you like to buy another item".
     * If answer is not it will display thank you message. [See Image] (https://github.com/avani19/Amazon-Bamazon/blob/master/Screenshots/Screen%20Shot-4.png).
     * If answer is yes it will prints all the products again. [See image] (https://github.com/avani19/Amazon-Bamazon/blob/master/Screenshots/Screen%20Shot-7.png).
-* At the end if purchase goes through, it will updates the stock quantity to reflect the purchase. [See Image] (https://github.com/avani19/Amazon-Bamazon/blob/master/Screenshots/Screen%20Shot-5.png).
+ * At the end if purchase goes through, it will updates the stock quantity to reflect the purchase. [See Image] (https://github.com/avani19/Amazon-Bamazon/blob/master/Screenshots/Screen%20Shot-5.png).
 
 ## Built With
 
